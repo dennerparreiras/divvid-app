@@ -9,7 +9,7 @@ export class Places {
   constructor(public api: Api) { }
 
   query(params?: any) {
-    return this.api.get('/items', params);
+    return this.api.get('/places', params);
   }
 
   add(item: Place) {

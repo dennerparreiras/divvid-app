@@ -1,4 +1,4 @@
-export class Purchase {
+export class Order {
   
     constructor(fields: any) {
       // Quick and dirty extend/assign fields to this model

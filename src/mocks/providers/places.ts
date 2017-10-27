@@ -1,60 +1,57 @@
 import { Injectable } from '@angular/core';
 
-import { Item } from '../../models/item';
+import { Place } from '../../models/place';
 
 @Injectable()
-export class Items {
-  items: Item[] = [];
+export class Places {
+  places: Place[] = [];
 
   defaultItem: any = {
     "name": "Burt Bear",
-    "profilePic": "assets/img/speakers/bear.jpg",
     "about": "Burt is a Bear.",
   };
 
 
   constructor() {
-    let items = [
+    let places = [
       {
         "name": "Burt Bear",
-        "profilePic": "assets/img/speakers/bear.jpg",
         "about": "Burt is a Bear."
       },
       {
         "name": "Charlie Cheetah",
-        "profilePic": "assets/img/speakers/cheetah.jpg",
         "about": "Charlie is a Cheetah."
       }
     ];
 
-    for (let item of items) {
-      this.items.push(new Item(item));
+    for (let place of places) {
+      this.places.push(new Place(place));
     }
   }
 
   query(params?: any) {
     if (!params) {
-      return this.items;
+      return this.places;
     }
 
-    return this.items.filter((item) => {
+    return this.places.filter((place) => {
       for (let key in params) {
-        let field = item[key];
+        let field = place[key];
         if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-          return item;
+          return place;
         } else if (field == params[key]) {
-          return item;
+          return place;
         }
       }
       return null;
     });
   }
 
-  add(item: Item) {
-    this.items.push(item);
+  add(place: Place) {
+    this.places.push(place);
   }
 
-  delete(item: Item) {
-    this.items.splice(this.items.indexOf(item), 1);
+  delete(place: Place) {
+    this.places.splice(this.places.indexOf(place), 1);
   }
 }

@@ -1,0 +1,35 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title> Meus Pedidos<!-- {{ 'LIST_MASTER_TITLE' | translate }} --> </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addBill()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let bill of currentBills">
+      <button ion-item (click)="openBill(bill)">
+
+        <ion-icon name="calculator" color="secondary" item-start></ion-icon>
+
+        <h2>{{bill.title}}</h2>
+        <p>{{bill.description}}</p>
+        <ion-note bill-end *ngIf="bill.note">{{bill.note}}</ion-note>
+      </button>
+
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deleteBill(bill)">
+          {{ 'DELETE_BUTTON' | translate }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

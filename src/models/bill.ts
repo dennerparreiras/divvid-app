@@ -1,4 +1,4 @@
-export class User {
+export class Bill {
   
     constructor(fields: any) {
       // Quick and dirty extend/assign fields to this model

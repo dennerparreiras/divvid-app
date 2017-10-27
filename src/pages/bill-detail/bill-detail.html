@@ -1,18 +1,41 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ bill.title }} TESTE</ion-title>
+    <ion-title>{{ bill.title }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="delete()">
+        <ion-icon name="trash" color="danger"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content>
-  <!-- <div class="item-profile" text-center #profilePic [style.background-image]="'url(' + item.profilePic + ')'">
-  </div> -->
 
-  <div class="bill-detail" padding>
-    <h2>{{bill.title}}</h2>
-    <p>{{bill.description}}</p>
-  </div>
+  <ion-card>
+    <ion-card-header>
+      <h2><ion-icon name="pricetag" color="secondary"></ion-icon>  Descrição</h2>
+    </ion-card-header>
+    <ion-card-content>
+      {{ bill.description }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item-sliding>
+    <button ion-item>
+      <ion-icon name="people" color="secondary" item-start></ion-icon>
+      <h2>Pessoas / Amigos</h2>
+      <p>Adiciona os integrantes do grupo</p>
+    </button>
+  </ion-item-sliding>
+
+  <ion-item-sliding>
+    <button ion-item>
+      <ion-icon name="list" color="secondary" item-start></ion-icon>
+      <h2>Itens do Pedido</h2>
+      <p>Adiciona os itens do pedido</p>
+    </button>
+  </ion-item-sliding>
+
 </ion-content>

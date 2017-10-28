@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, Platform  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ModalController, ViewController } from 'ionic-angular';
 
 import { Bills } from '../../providers/providers';
 
@@ -13,13 +13,19 @@ export class BillDetailPage {
   bills: any;
   actionsheetCtrl: any;
   platform: any;
+  modalCrtl: ModalController;
 
-  constructor(
-    public navCtrl: NavController, navParams: NavParams, bills: Bills, platform: Platform, actionSheetCtrl: ActionSheetController) {
+  constructor(public navCtrl: NavController, navParams: NavParams, bills: Bills, platform: Platform, actionSheetCtrl: ActionSheetController, modalCtrl: ModalController) {
     this.bill = navParams.get('bill') || bills.defaultBill;
     this.bills = bills;
     this.actionsheetCtrl = actionSheetCtrl;
     this.platform = platform;
+    this.modalCrtl = modalCtrl;
+  }
+
+  editBill(bill) {
+    // let modal = this.modalCrtl.create(ModalContentPage, bill);
+    // modal.present();
   }
 
   /**
@@ -32,7 +38,7 @@ export class BillDetailPage {
   /**
  * Open a menu to confirm to Delete an bill from the list of bills.
  */
-  openMenu(bill) {
+  delete(bill) {
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Você tem certeza que quer deletar?',
       cssClass: 'action-sheets-basic-page',
@@ -50,4 +56,6 @@ export class BillDetailPage {
     });
     actionSheet.present();
   }
+
+
 }

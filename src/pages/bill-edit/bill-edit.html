@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Novo pedido</ion-title>
+    <ion-title>Editar Pedido</ion-title>
     <ion-buttons start>
       <button ion-button (click)="cancel()">
         <span color="primary" showWhen="ios">
@@ -24,22 +24,21 @@
 
 
 <ion-content>
-  <form *ngIf="form" [formGroup]="form">
-    <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
+  <form *ngIf="form" [formGroup]="form" [(ngModel)]="currentBill">
     <ion-list>
       <ion-item>
-        <ion-input type="text" placeholder="Título do pedido..." formControlName="title"></ion-input>
+        <ion-input type="text" placeholder="Título do pedido..." formControlName="title" [(ngModel)]="currentBill.title"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="text" placeholder="Descrição" formControlName="description"></ion-input>
+        <ion-input type="text" placeholder="Descrição" formControlName="description" [(ngModel)]="currentBill.description"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Realizado hoje?</ion-label>
-        <ion-toggle formControlName="todayToggle" (ngModelChange)="revealDate(form)" [(ngModel)]="form.todayToggle"></ion-toggle>
+        <ion-toggle formControlName="todayToggle" (ngModelChange)="revealDate(form)" [(ngModel)]="currentBill.todayToggle"></ion-toggle>
       </ion-item>
       <ion-item *ngIf="!changeValues">
         <ion-label>Data do pedido</ion-label>
-        <ion-datetime displayFormat="DD MMM YYYY" formControlName="billDate" [(ngModel)]="form.billDate"></ion-datetime>
+        <ion-datetime displayFormat="DD MMM YYYY" formControlName="billDate" [(ngModel)]="currentBill.billDate"></ion-datetime>
       </ion-item>
     </ion-list>
   </form>

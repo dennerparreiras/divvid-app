@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ModalController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ModalController } from 'ionic-angular';
 
 import { Bills } from '../../providers/providers';
 
@@ -26,6 +26,9 @@ export class BillDetailPage {
   editBill(bill) {
     // let modal = this.modalCrtl.create(ModalContentPage, bill);
     // modal.present();
+    this.navCtrl.push('BillEditPage', {
+      bill: bill
+    });
   }
 
   /**
@@ -40,11 +43,11 @@ export class BillDetailPage {
  */
   delete(bill) {
     let actionSheet = this.actionsheetCtrl.create({
-      title: 'Você tem certeza que quer deletar?',
+      title: 'Você tem certeza que quer excluir este pedido?',
       cssClass: 'action-sheets-basic-page',
       buttons: [
         {
-          text: 'Deletar',
+          text: 'Excluir',
           role: 'destructive',
           icon: !this.platform.is('ios') ? 'trash' : null,
           handler: () => {

@@ -4,7 +4,7 @@
     <ion-title>{{ bill.title }}</ion-title>
 
     <ion-buttons end>
-      <button ion-button (click)="deleteBill(bill)" strong>
+      <button ion-button (click)="delete(bill)" strong>
         <span color="danger" showWhen="ios">
           Excluir
         </span>
@@ -27,7 +27,7 @@
   </ion-card>
 
   <ion-item-sliding>
-    <button ion-item (click)="editBill(bill)">
+    <button ion-item>
       <ion-icon name="create" color="primary" item-start></ion-icon>
       <h2>Editar pedido</h2>
       <p>Edita data, título e descrição</p>

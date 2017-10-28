@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ 'ITEM_CREATE_TITLE' | translate }} TESTE</ion-title>
+    <ion-title>Novo pedido</ion-title>
     <ion-buttons start>
       <button ion-button (click)="cancel()">
         <span color="primary" showWhen="ios">
@@ -32,6 +32,14 @@
       </ion-item>
       <ion-item>
         <ion-input type="text" placeholder="Descrição" formControlName="description"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Realizado hoje?</ion-label>
+        <ion-toggle formControlName="todayToggle" (click)="revealDate(form)"></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf="changeValues">
+        <ion-label>Data do pedido</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" formControlName="billDate" [(ngModel)]="form.billDate"></ion-datetime>
       </ion-item>
     </ion-list>
   </form>

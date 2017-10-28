@@ -6,9 +6,12 @@ import { Bill } from '../../models/bill';
 export class Bills {
   bills: Bill[] = [];
 
+  private fakeDate = new Date();
+
   defaultBill: any = {
     "title": "Saída de sábado",
     "description": "Barzinho com os amigos.",
+    "billDate" : this.fakeDate
   };
 
 
@@ -16,11 +19,13 @@ export class Bills {
     let bills = [
       {
         "title": "A Granel",
-        "description": "Dia 26/10"
+        "description": "Dia 26/10",
+        "billDate" : this.fakeDate
       },
       {
         "title": "Churras do Arthur",
-        "description": "Festa de final de ano"
+        "description": "Festa de final de ano",
+        "billDate" : this.fakeDate
       }
     ];
 

@@ -18,7 +18,8 @@
       <h2><ion-icon name="pricetag" color="secondary"></ion-icon>  Descrição</h2>
     </ion-card-header> -->
     <ion-card-content>
-      {{ bill.description }}
+      <p><b>Pedido realizado dia {{bill.billDate | date: 'dd/MM/yyyy'}}</b></p>
+      <p>{{ bill.description }}</p>
     </ion-card-content>
   </ion-card>
 

@@ -14,9 +14,9 @@
 <ion-content>
 
   <ion-card>
-    <ion-card-header>
+    <!-- <ion-card-header>
       <h2><ion-icon name="pricetag" color="secondary"></ion-icon>  Descrição</h2>
-    </ion-card-header>
+    </ion-card-header> -->
     <ion-card-content>
       {{ bill.description }}
     </ion-card-content>
@@ -35,6 +35,14 @@
       <ion-icon name="list" color="secondary" item-start></ion-icon>
       <h2>Itens do Pedido</h2>
       <p>Adiciona os itens do pedido</p>
+    </button>
+  </ion-item-sliding>
+
+  <ion-item-sliding>
+    <button ion-item>
+      <ion-icon name="pie" color="attention" item-start></ion-icon>
+      <h2>Divisão de Valores</h2>
+      <p>Resultado da divisão do consumo para o grupo</p>
     </button>
   </ion-item-sliding>
 

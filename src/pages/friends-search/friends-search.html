@@ -1,0 +1,22 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Amigos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-searchbar (ionChange)="getFriends()" [(ngModel)]="searchKeys" placeholder="Digite aqui o nome do amigo"></ion-searchbar>
+  <ion-list>
+    <button ion-item (click)="openFriend(friend)" *ngFor="let friend of currentFriends">
+      <ion-avatar item-start>
+        <img [src]="friend.profilePic" />
+      </ion-avatar>
+      <h2>{{friend.name}}</h2>
+      <p>{{friend.about}}</p>
+      <ion-note item-end *ngIf="friend.note">{{friend.note}}</ion-note>
+    </button>
+  </ion-list>
+</ion-content>

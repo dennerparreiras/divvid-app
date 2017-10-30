@@ -1,0 +1,18 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ friend.name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div class="friend-profile" text-center #profilePic [style.background-image]="'url(' + friend.profilePic + ')'">
+  </div>
+
+  <div class="friend-detail" padding>
+    <h2>{{friend.name}}</h2>
+    <p>{{friend.about}}</p>
+  </div>
+</ion-content>

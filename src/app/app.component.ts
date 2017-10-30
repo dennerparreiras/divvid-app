@@ -26,7 +26,7 @@ import { Settings } from '../providers/providers';
   </ion-menu>
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
-export class MyApp {
+export class Divvid {
   rootPage = FirstRunPage;
 
   @ViewChild(Nav) nav: Nav;
@@ -34,7 +34,8 @@ export class MyApp {
   pages: any[] = [
     { title: 'Aprendendo', component: 'TutorialPage' },
     { title: 'Login', component: 'WelcomePage' },
-    { title: 'Home', component: 'HomePage' }
+    { title: 'Pedidos', component: 'HomePage' },
+    { title: 'Amigos', component: 'FriendSearchPage' }
   ]
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {

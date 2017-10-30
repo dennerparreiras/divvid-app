@@ -11,11 +11,12 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { Items } from '../mocks/providers/items';
 import { Bills } from '../mocks/providers/bills';
+import { Friends } from '../mocks/providers/friends';
 import { Places } from '../mocks/providers/places';
 import { Settings } from '../providers/providers';
 import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
-import { MyApp } from './app.component';
+import { Divvid } from './app.component';
 
 import { BillEditPage } from '../pages/bill-edit/bill-edit';
 
@@ -34,19 +35,19 @@ export function provideSettings(storage: Storage) {
    */
   return new Settings(storage, {
     option1: true,
-    option2: 'Ionitron J. Framework',
+    option2: 'Denner Parreiras',
     option3: '3',
-    option4: 'Hello'
+    option4: 'Teste'
   });
 }
 
 @NgModule({
   declarations: [
-    MyApp,
+    Divvid,
     BillEditPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp
+    IonicModule.forRoot(Divvid
       // ,{
       // monthNames: ['Janeiro', 'Fevereiro', 'Mar\u00e7o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Novembro', 'Dezembro' ],
       // monthShortNames: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Nov', 'Dez' ],
@@ -67,7 +68,7 @@ export function provideSettings(storage: Storage) {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    Divvid,
     BillEditPage
   ],
   providers: [
@@ -79,6 +80,7 @@ export function provideSettings(storage: Storage) {
     StatusBar,
     Places,
     Bills,
+    Friends,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

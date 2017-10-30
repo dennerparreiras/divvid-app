@@ -17,6 +17,7 @@ import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
 
+import { BillEditPage } from '../pages/bill-edit/bill-edit';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -41,9 +42,18 @@ export function provideSettings(storage: Storage) {
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
+    BillEditPage
   ],
   imports: [
+    IonicModule.forRoot(MyApp
+      // ,{
+      // monthNames: ['Janeiro', 'Fevereiro', 'Mar\u00e7o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Novembro', 'Dezembro' ],
+      // monthShortNames: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Nov', 'Dez' ],
+      // dayNames: ['Domingo', 'Segunda-feira', 'Ter\u00e7a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira' ],
+      // dayShortNames: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex' ]
+      // }
+    ),
     BrowserModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -53,12 +63,12 @@ export function provideSettings(storage: Storage) {
         deps: [HttpClient]
       }
     }),
-    IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
+    MyApp,
+    BillEditPage
   ],
   providers: [
     Api,

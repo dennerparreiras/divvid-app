@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ModalController, ViewController } from 'ionic-angular';
 
 import { Bills } from '../../providers/providers';
+import { BillEditPage } from '../bill-edit/bill-edit';
 
 @IonicPage()
 @Component({
@@ -23,12 +24,9 @@ export class BillDetailPage {
     this.modalCrtl = modalCtrl;
   }
 
-  editBill(bill) {
-    // let modal = this.modalCrtl.create(ModalContentPage, bill);
-    // modal.present();
-    this.navCtrl.push('BillEditPage', {
-      bill: bill
-    });
+  editBill() {
+    let myModal = this.modalCrtl.create(BillEditPage, {bill: this.bill});
+    myModal.present();
   }
 
   /**
@@ -59,6 +57,4 @@ export class BillDetailPage {
     });
     actionSheet.present();
   }
-
-
 }

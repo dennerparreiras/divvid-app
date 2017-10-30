@@ -22,23 +22,16 @@ export class FriendSearchPage {
    * Perform a service for the proper friends.
    */
   getFriends() {
-    let val = this.searchKeys || '';
-    if (!val || !val.trim()) {
-      this.currentFriends = this.friends;
-      return;
-    }
-    if(val == ''){
-      console.log('IF >> ');
-      console.log(val);
+    console.log(' >>>>>>> ');
+    console.log(this.searchKeys);
+    if(this.searchKeys == ''){
       let newFriends = new Friends();
       this.currentFriends = newFriends.query('');
       return;
     }
     else {
-      console.log('ELSE >> ');
-      console.log(val);
       this.currentFriends = this.friends.query({
-        name: val
+        name: this.searchKeys
       });
     }
   }

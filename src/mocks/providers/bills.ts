@@ -7,8 +7,9 @@ export class Bills {
   bills: Bill[] = [];
 
   defaultBill: any = {
-    "title": "Saída de sábado",
+    "title": "Saída de sábado (Exemplo)",
     "description": "Barzinho com os amigos.",
+    "billDate" : new Date().toISOString()
   };
 
 
@@ -16,11 +17,18 @@ export class Bills {
     let bills = [
       {
         "title": "A Granel",
-        "description": "Dia 26/10"
+        "description": "Aniversário do Rhaylander.",
+        "billDate" : new Date('2017-10-26').toISOString()
       },
       {
         "title": "Churras do Arthur",
-        "description": "Festa de final de ano"
+        "description": "Festa com a galera da faculdade.",
+        "billDate" : new Date('2017-10-21').toISOString()
+      },
+      {
+        "title": "Pizza de Sexta",
+        "description": "Reunião de familia.",
+        "billDate" : new Date('2017-10-27').toISOString()
       }
     ];
 

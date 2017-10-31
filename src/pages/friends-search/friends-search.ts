@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 
 import { Friend } from '../../models/friend';
 import { Friends } from '../../providers/providers';
@@ -14,7 +14,7 @@ export class FriendSearchPage {
   searchKeys: string = '';
   currentFriends: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public friends: Friends) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public friends: Friends, public modalCtrl: ModalController) {
     this.currentFriends = friends.query('');
   }
 
@@ -43,6 +43,16 @@ export class FriendSearchPage {
     this.navCtrl.push('FriendDetailPage', {
       friend: friend
     });
+  }
+
+  addFriend() {
+    let addModal = this.modalCtrl.create('FriendCreatePage');
+    addModal.onDidDismiss(friend => {
+      if (friend) {
+        this.friends.add(friend);
+      }
+    })
+    addModal.present();
   }
 
 }

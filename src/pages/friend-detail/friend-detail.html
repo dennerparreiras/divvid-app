@@ -2,7 +2,16 @@
 
   <ion-navbar color="secondary">
     <ion-title>{{ friend.name }}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="options()" strong>
+        <span color="light" showWhen="ios">
+          Opções
+        </span>
+        <ion-icon name="more" color="light" showWhen="core,android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+
 
 </ion-header>
 

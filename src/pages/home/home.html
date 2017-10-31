@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title> Meus Pedidos<!-- {{ 'LIST_MASTER_TITLE' | translate }} --> </ion-title>
 
     <ion-buttons end>
@@ -18,7 +18,7 @@
     <ion-item-sliding *ngFor="let bill of currentBills">
       <button ion-item (click)="openBill(bill)">
 
-        <ion-icon name="clipboard" color="primary" item-start></ion-icon>
+        <ion-icon name="clipboard" color="trird" item-start></ion-icon>
 
         <h2>{{bill.title}}</h2>
         <p>{{bill.description}}</p>

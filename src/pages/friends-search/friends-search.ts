@@ -22,18 +22,9 @@ export class FriendSearchPage {
    * Perform a service for the proper friends.
    */
   getFriends() {
-    console.log(' >>>>>>> ');
-    console.log(this.searchKeys);
-    if(this.searchKeys == ''){
-      let newFriends = new Friends();
-      this.currentFriends = newFriends.query('');
-      return;
-    }
-    else {
-      this.currentFriends = this.friends.query({
-        name: this.searchKeys
-      });
-    }
+    this.currentFriends = this.friends.query({
+      name: this.searchKeys
+    });
   }
 
   /**
@@ -42,6 +33,8 @@ export class FriendSearchPage {
   openFriend(friend: Friend) {
     this.navCtrl.push('FriendDetailPage', {
       friend: friend
+    }).then(() => {
+      this.getFriends();
     });
   }
 
@@ -50,6 +43,7 @@ export class FriendSearchPage {
     addModal.onDidDismiss(friend => {
       if (friend) {
         this.friends.add(friend);
+        this.getFriends();
       }
     })
     addModal.present();

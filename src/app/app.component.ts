@@ -32,17 +32,24 @@ export class Divvid {
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
-    { title: 'Aprendendo', component: 'TutorialPage' },
-    { title: 'Login', component: 'WelcomePage' },
-    { title: 'Pedidos', component: 'HomePage' },
-    { title: 'Amigos', component: 'FriendSearchPage' }
+    { title: 'Aprendendo', component: 'TutorialPage'     },
+    { title: 'Login',      component: 'WelcomePage'      },
+    { title: 'Pedidos',    component: 'HomePage'         },
+    { title: 'Amigos',     component: 'FriendSearchPage' }
   ]
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
+
+      //this.statusBar.styleDefault();
+
+      // let status bar overlay webview
+      this.statusBar.overlaysWebView(true);
+
+      // set status bar to white
+      this.statusBar.backgroundColorByHexString('#6d008a');
       this.splashScreen.hide();
     });
     this.initTranslate();

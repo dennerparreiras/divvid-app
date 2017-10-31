@@ -28,7 +28,7 @@ export class FriendDetailPage {
       buttons: [
         {
           text: 'Editar',
-          icon: !this.platform.is('ios') ? 'build' : null,
+          icon: !this.platform.is('ios') ? 'create' : null,
           handler: () => {
             this.editFriend();
             this.navCtrl.popToRoot();
@@ -40,7 +40,6 @@ export class FriendDetailPage {
           icon: !this.platform.is('ios') ? 'trash' : null,
           handler: () => {
             this.confirmDelete('Confirmar exclusão', 'Deseja mesmo excluir este amigo?');
-            
           }
         }
       ]

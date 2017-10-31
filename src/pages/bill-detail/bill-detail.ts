@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, AlertController, Platform, ModalController } from 'ionic-angular';
 
 import { Bills } from '../../providers/providers';
 import { BillEditPage } from '../bill-edit/bill-edit';
@@ -16,12 +16,22 @@ export class BillDetailPage {
   platform: any;
   modalCrtl: ModalController;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, bills: Bills, platform: Platform, actionSheetCtrl: ActionSheetController, modalCtrl: ModalController) {
+  constructor(
+    public navCtrl: NavController, 
+    navParams: NavParams, 
+    bills: Bills, 
+    platform: Platform, 
+    actionSheetCtrl: ActionSheetController, 
+    modalCtrl: ModalController, 
+    public alertCtrl: AlertController
+  ) {
+
     this.bill = navParams.get('bill') || bills.defaultBill;
     this.bills = bills;
     this.actionsheetCtrl = actionSheetCtrl;
     this.platform = platform;
     this.modalCrtl = modalCtrl;
+
   }
 
   editBill() {
@@ -32,29 +42,59 @@ export class BillDetailPage {
   /**
    * Delete the bill.
    */
-  deleteBill(bill) {
-    this.bills.delete(bill);
+  deleteBill() {
+    this.bills.delete(this.bill);
   }  
 
-  /**
- * Open a menu to confirm to Delete an bill from the list of bills.
- */
-  delete(bill) {
+    /**
+   * Open a menu to confirm to Delete an bill from the list of bills.
+   */
+  options(){
     let actionSheet = this.actionsheetCtrl.create({
-      title: 'Você tem certeza que quer excluir este pedido?',
+      title: 'O que deseja fazer?',
       cssClass: 'action-sheets-basic-page',
       buttons: [
+        {
+          text: 'Editar',
+          icon: !this.platform.is('ios') ? 'create' : null,
+          handler: () => {
+            this.editBill();
+          }
+        },
         {
           text: 'Excluir',
           role: 'destructive',
           icon: !this.platform.is('ios') ? 'trash' : null,
           handler: () => {
-            this.deleteBill(bill);
-            this.navCtrl.popToRoot();
+            this.confirmDelete('Confirmar exclusão', 'Deseja mesmo excluir este pedido?');
           }
         }
       ]
     });
     actionSheet.present();
+  }
+
+  private confirmDelete(title, message) {
+    const alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: [
+        {
+          text: 'Sim',
+          role: 'destructive',
+          handler: () => {
+            this.deleteBill();
+            this.navCtrl.popToRoot();
+          }
+        },
+        {
+          text: 'Não',
+          handler: () => {
+            return;
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

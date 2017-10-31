@@ -4,11 +4,11 @@
     <ion-title>{{ bill.title }}</ion-title>
 
     <ion-buttons end>
-      <button ion-button (click)="delete(bill)" strong>
-        <span color="danger" showWhen="ios">
-          Excluir
+      <button ion-button (click)="options()" strong>
+        <span color="light" showWhen="ios">
+          Opções
         </span>
-        <ion-icon name="trash" color="danger" showWhen="core,android,windows"></ion-icon>
+        <ion-icon name="more" color="light" showWhen="core,android,windows"></ion-icon>
       </button>
     </ion-buttons>
 
@@ -26,13 +26,13 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-item-sliding>
+  <!-- <ion-item-sliding>
     <button ion-item (click)="editBill()">
       <ion-icon name="create" color="primary" item-start></ion-icon>
       <h2>Editar pedido</h2>
       <p>Edita data, título e descrição</p>
     </button>
-  </ion-item-sliding>
+  </ion-item-sliding> -->
 
   <ion-item-sliding>
     <button ion-item>

@@ -7,23 +7,25 @@ import { Config, Nav, Platform } from 'ionic-angular';
 import { FirstRunPage } from '../pages/pages';
 import { Settings } from '../providers/providers';
 
+// <ion-menu [content]="content">
+// <ion-header>
+//   <ion-toolbar>
+//     <ion-title>Pages</ion-title>
+//   </ion-toolbar>
+// </ion-header>
+
+// <ion-content>
+//   <ion-list>
+//     <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+//       {{p.title}}
+//     </button>
+//   </ion-list>
+// </ion-content>
+
+// </ion-menu>
+
 @Component({
-  template: `<ion-menu [content]="content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Pages</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <ion-list>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          {{p.title}}
-        </button>
-      </ion-list>
-    </ion-content>
-
-  </ion-menu>
+  template: `
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
 export class Divvid {
@@ -32,10 +34,10 @@ export class Divvid {
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
-    { title: 'Aprendendo', component: 'TutorialPage'     },
-    { title: 'Login',      component: 'WelcomePage'      },
-    { title: 'Pedidos',    component: 'HomePage'         },
-    { title: 'Amigos',     component: 'FriendSearchPage' }
+    { title: 'Aprendendo', component: 'TutorialPage'     }
+    // { title: 'Login',      component: 'WelcomePage'      },
+    // { title: 'Pedidos',    component: 'HomePage'         },
+    // { title: 'Amigos',     component: 'FriendSearchPage' }
   ]
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
@@ -46,7 +48,7 @@ export class Divvid {
       //this.statusBar.styleDefault();
 
       // let status bar overlay webview
-      this.statusBar.overlaysWebView(true);
+      //this.statusBar.overlaysWebView(true);
 
       // set status bar to white
       this.statusBar.backgroundColorByHexString('#6d008a');

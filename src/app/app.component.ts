@@ -61,25 +61,25 @@ export class Divvid {
       })
         .then((db: SQLiteObject) => {
       
-          // db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Bill(BillID INTEGER PRIMARY KEY AUTO INCREMENT, Title VARCHAR(100), Description VARCHAR(MAX), BillDate DATETIME, Deleted BIT)(?)', {})
-          //   .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Bill'))
-          //   .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Bill' + e));
+          db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Bill(BillID INTEGER PRIMARY KEY AUTO INCREMENT, Title VARCHAR(100), Description VARCHAR(MAX), BillDate DATETIME, Deleted BIT)(?)', {})
+            .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Bill'))
+            .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Bill' + e));
           
-          // db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Friend(FriendID INTEGER PRIMARY KEY AUTO INCREMENT, Title VARCHAR(100), Description VARCHAR(MAX), BillDate DATETIME, Deleted BIT)(?)', {})
-          //   .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Friend'))
-          //   .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Friend' + e));
+          db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Friend(F PRIMARY KEY AUTO INCREMENT, Title VARCHAR(100), Description VARCHAR(MAX), BillDate DATETIME, Deleted BIT)(?)', {})
+            .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Friend'))
+            .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Friend' + e));
 
-          // db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Product(ProductID INTEGER PRIMARY KEY AUTO INCREMENT, Title VARCHAR(100), Description VARCHAR(MAX), BillDate DATETIME, Deleted BIT)(?)', {})
-          //   .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Product'))
-          //   .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Product' + e));
+          db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Product(ProductID INTEGER PRIMARY KEY AUTO INCREMENT, Description VARCHAR(MAX), Quantity INTEGER, UnityPrice DECIMAL(18,2), Deleted BIT)(?)', {})
+            .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Product'))
+            .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Product' + e));
       
-          // db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Bill_Friend(BillFriendID INTEGER PRIMARY KEY AUTO INCREMENT, Title VARCHAR(100), Description VARCHAR(MAX), BillDate DATETIME, Deleted BIT)(?)', {})
-          //   .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Bill_Friend'))
-          //   .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Bill_Friend' + e));
+          db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Bill_Friend(BillFriendID INTEGER PRIMARY KEY AUTO INCREMENT, FriendID INTEGER FOREIGN KEY, BillID INTEGER FOREIGN KEY, Deleted BIT)(?)', {})
+            .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Bill_Friend'))
+            .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Bill_Friend' + e));
            
-          // db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Bill_Product(BillProductID INTEGER PRIMARY KEY AUTO INCREMENT, Title VARCHAR(100), Description VARCHAR(MAX), BillDate DATETIME, Deleted BIT)(?)', {})
-          //   .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Bill_Product'))
-          //   .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Bill_Product' + e));
+          db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Bill_Product(BillProductID INTEGER PRIMARY KEY AUTO INCREMENT, ProductID INTEGER FOREIGN KEY, BillID INTEGER FOREIGN KEY, Deleted BIT)(?)', {})
+            .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Bill_Product'))
+            .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Bill_Product' + e));
       
         })
         .catch(e => console.log(e));

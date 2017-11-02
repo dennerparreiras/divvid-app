@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { Bill } from '../../models/bill';
+import { BillDAO } from '../../DAO/DAO-bill';
+import { DatabaseProvider } from '../../providers/database/database';
 
 @Injectable()
 export class Bills {
   bills: Bill[] = [];
+  dao: BillDAO;
 
   defaultBill: any = {
     "title": "Saída de sábado (Exemplo)",
@@ -13,31 +16,24 @@ export class Bills {
   };
 
 
-  constructor() {
-    let bills = [
-      {
-        "title": "A Granel",
-        "description": "Aniversário do Rhaylander.",
-        "billDate" : new Date('2017-10-26').toISOString()
-      },
-      {
-        "title": "Churras do Arthur",
-        "description": "Festa com a galera da faculdade.",
-        "billDate" : new Date('2017-10-21').toISOString()
-      },
-      {
-        "title": "Pizza de Sexta",
-        "description": "Reunião de familia.",
-        "billDate" : new Date('2017-10-27').toISOString()
-      }
-    ];
+  constructor(private dataBaseProv: DatabaseProvider) {
+    this.dao = new BillDAO(dataBaseProv);
+  }
 
-    for (let bill of bills) {
-      this.bills.push(new Bill(bill));
-    }
+  public getList(): any{
+    this.dao.getList().then((billsFound) => {
+      this.bills = [];
+      for (let bill of billsFound) {
+        this.bills.push(new Bill(bill));
+      }
+    })
+    return this.bills;
   }
 
   query(params?: any) {
+    console.log('bills.ts query');
+    this.getList();
+
     if (!params) {
       return this.bills;
     }
@@ -55,8 +51,8 @@ export class Bills {
     });
   }
 
-  add(bill: Bill) {
-    this.bills.push(bill);
+  add(bill: Bill): any{
+    this.dao.insert(bill);
   }
 
   delete(bill: Bill) {

@@ -54,7 +54,7 @@ export class DatabaseProvider {
   }
 
   fillDatabase() {
-    this.http.get('../www/assets/queries/app_start.sql')
+    this.http.get('./assets/queries/app_start.sql')
       .map(res => res.text())
       .subscribe(sql => {
         this.sqlitePorter.importSqlToDb(this.database, sql)
@@ -129,6 +129,7 @@ export class DatabaseProvider {
     let SQL = this.getNewSQLObject();
     SQL.table = table;
     SQL.query = "SELECT * FROM " + SQL.table;
+
     this.printQuery(SQL.query);
 
     return this.database.executeSql(SQL.query, []).then((data) => {
@@ -143,8 +144,21 @@ export class DatabaseProvider {
 
   }
 
-  delete(){
+  delete(table, ItemID_Field, ItemID_Value){
+    let SQL = this.getNewSQLObject();
+    SQL.table = table;
+    SQL.stringFields = ItemID_Field;
+    SQL.stringValues = ItemID_Value;
+    SQL.query = "DELETE FROM " + SQL.table + " WHERE " + SQL.stringFields + " = " + SQL.stringValues;
 
+    this.printQuery(SQL.query);
+
+    return this.database.executeSql(SQL.query, []).then(() => {
+      return true;
+    }, (err) => {
+      console.log('Error: ', err);
+      return false;
+    });
   }
  
   // addDeveloper(name, skill, years) {

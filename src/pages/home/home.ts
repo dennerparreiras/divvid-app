@@ -13,7 +13,15 @@ export class HomePage {
   currentBills: Bill[];
 
   constructor(public navCtrl: NavController, public bills: Bills, public modalCtrl: ModalController) {
-    this.currentBills = this.bills.query();
+    this.refreshBills();
+  }
+
+  private refreshBills(){
+    this.bills.getList().then((data)=>{
+      this.currentBills = data;
+      console.log('Refresh bills:');
+      console.log(this.currentBills);
+    })
   }
 
   /**
@@ -31,6 +39,7 @@ export class HomePage {
     addModal.onDidDismiss(bill => {
       if (bill) {
         this.bills.add(bill);
+        this.refreshBills();
       }
     })
     addModal.present();
@@ -40,7 +49,9 @@ export class HomePage {
    * Delete an bill from the list of bills.
    */
   deleteBill(bill) {
-    this.bills.delete(bill);
+    this.bills.delete(bill).then(()=>{
+      this.refreshBills();
+    })
   }
 
   /**

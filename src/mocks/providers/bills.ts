@@ -20,14 +20,16 @@ export class Bills {
     this.dao = new BillDAO(dataBaseProv);
   }
 
-  public getList(): any{
-    this.dao.getList().then((billsFound) => {
-      this.bills = [];
-      for (let bill of billsFound) {
-        this.bills.push(new Bill(bill));
-      }
-    })
-    return this.bills;
+  public getList(): Promise<any[]>{
+    return new Promise((resolve,reject) => {
+      this.dao.getList().then((billsFound) => {
+        this.bills = [];
+        for (let bill of billsFound) {
+          this.bills.push(new Bill(bill));
+        }
+        resolve(this.bills);
+      })
+   })
   }
 
   query(params?: any) {
@@ -56,6 +58,13 @@ export class Bills {
   }
 
   delete(bill: Bill) {
-    this.bills.splice(this.bills.indexOf(bill), 1);
+    //this.bills.splice(this.bills.indexOf(bill), 1);
+    return new Promise((resolve,reject) => {
+      this.dao.delete(bill).then((data) => {
+        resolve(data);
+      })
+   }).catch(()=>{
+     return false;
+   })
   }
 }

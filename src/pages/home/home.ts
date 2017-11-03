@@ -38,7 +38,7 @@ export class HomePage {
     let addModal = this.modalCtrl.create('BillCreatePage');
     addModal.onDidDismiss(bill => {
       if (bill) {
-        this.bills.add(bill);
+        this.bills.insert(bill);
         this.refreshBills();
       }
     })
@@ -50,6 +50,7 @@ export class HomePage {
    */
   deleteBill(bill) {
     this.bills.delete(bill).then(()=>{
+      console.log('bill deleted');
       this.refreshBills();
     })
   }

@@ -41,7 +41,7 @@ export class BillDAO{
         let fields: String[] = ['Title', 'Description', 'BillDate', 'Deleted'];
         let values: String[] = [bill.title, bill.description, bill.billDate, '0'];
 
-        this.databaseprovider.add(table, fields, values).then(() => {
+        this.databaseprovider.insert(table, fields, values).then(() => {
             console.log('Pedido adicionado com sucesso!');
         })
         .catch((err)=>{

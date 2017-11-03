@@ -53,7 +53,7 @@ export class Bills {
     });
   }
 
-  add(bill: Bill): any{
+  insert(bill: Bill): any{
     this.dao.insert(bill);
   }
 

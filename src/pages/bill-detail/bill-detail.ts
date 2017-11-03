@@ -43,7 +43,9 @@ export class BillDetailPage {
    * Delete the bill.
    */
   deleteBill() {
-    this.bills.delete(this.bill);
+    this.bills.delete(this.bill).then(()=>{
+      console.log('bill deleted');
+    })
   }  
 
     /**
@@ -84,7 +86,13 @@ export class BillDetailPage {
           role: 'destructive',
           handler: () => {
             this.deleteBill();
-            this.navCtrl.popToRoot();
+            this.navCtrl.pop().then(()=>{
+              this.bills.getList().then((data)=>{
+                this.bills = data;
+                console.log('Refresh bills:');
+                console.log(this.bills);
+              })
+            });
           }
         },
         {

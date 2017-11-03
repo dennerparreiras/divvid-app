@@ -17,7 +17,7 @@ export class DatabaseProvider {
     this.platform.ready().then(() => {
       this.sqlite.create({
         name: 'developers.db',
-        location: 'default'
+        location: '2'
       })
         .then((db: SQLiteObject) => {
           this.database = db;
@@ -76,7 +76,9 @@ export class DatabaseProvider {
       table: '',
       stringFields: '',
       stringValues: '',
-      query: ''
+      query: '',
+      fields: [],
+      values: []
     };
   }
 
@@ -100,11 +102,15 @@ export class DatabaseProvider {
         SQL.stringValues += ", '" + value + "'";
       }
     });
+
     SQL.table = data.table;
+    SQL.fields = data.fields;
+    SQL.values = data.values;
+
     return SQL;
   }
 
-  add(table: String, fields: String[], values: String[]){
+  insert(table: String, fields: String[], values: String[]){
     let SQL = this.fillSQLObject(
       this.getNewSQLObject(),
       {
@@ -140,8 +146,35 @@ export class DatabaseProvider {
     });
   }
 
-  edit(){
+  update(table:string, ItemID_Field:string, ItemID_Value:string, Item_Fields:string[], Item_Values:string[]){
+    let SQL = this.fillSQLObject(
+      this.getNewSQLObject(),
+      {
+        table,
+        Item_Fields,
+        Item_Values
+      }
+    );
 
+    SQL.query  = "UPDATE " + SQL.table;
+    SQL.query += "SET ";
+    for(let i=0; i < SQL.stringFields.length; i++ ){
+      if(i == 0) {
+        SQL.query += " " + SQL.stringFields[i] + " = " + SQL.stringValues[i] + " ";        
+      }
+      else{
+        SQL.query += ", " + SQL.stringFields[i] + " = " + SQL.stringValues[i] + " ";    
+      }
+    }
+    SQL.query += " WHERE " + ItemID_Field + " = " + ItemID_Value;
+    this.printQuery(SQL.query);
+
+    return this.database.executeSql(SQL.query, {}).then(data => {
+      return data;
+    }, err => {
+      console.log('Error: ', err);
+      return err;
+    });
   }
 
   delete(table, ItemID_Field, ItemID_Value){
@@ -160,6 +193,7 @@ export class DatabaseProvider {
       return false;
     });
   }
+  
  
   // addDeveloper(name, skill, years) {
   //   let data = [name, skill, years]

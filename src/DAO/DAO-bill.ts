@@ -9,7 +9,7 @@ export class BillDAO{
     public getList(): Promise<Bills[]>{
         let bills: any[] = [];
         return new Promise((resolve,reject) => {
-            this.databaseprovider.getAll('DIV_Bill')
+            this.databaseprovider.select('DIV_Bill')
                 .then((data) => {
                     if(data){
                         console.log(data);
@@ -37,15 +37,14 @@ export class BillDAO{
     }
 
     insert(bill: any){
-        let table: String = 'DIV_Bill';
-        let fields: String[] = ['Title', 'Description', 'BillDate', 'Deleted'];
-        let values: String[] = [bill.title, bill.description, bill.billDate, '0'];
+        let table: string = 'DIV_Bill';
+        let fields: string[] = ['Title', 'Description', 'BillDate', 'Deleted'];
+        let values: string[] = [bill.title, bill.description, bill.billDate, '0'];
 
         this.databaseprovider.insert(table, fields, values).then(() => {
             console.log('Pedido adicionado com sucesso!');
         })
         .catch((err)=>{
-            console.log(':::::::::::::::::::::::::::::::');
             console.error(err);
         })
     }

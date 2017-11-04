@@ -34,6 +34,10 @@ export class BillDetailPage {
 
   }
 
+  findDate(date:string): Date{
+    return new Date(date);
+  }
+
   editBill() {
     let myModal = this.modalCrtl.create(BillEditPage, {bill: this.bill});
     myModal.present();
@@ -86,13 +90,7 @@ export class BillDetailPage {
           role: 'destructive',
           handler: () => {
             this.deleteBill();
-            this.navCtrl.pop().then(()=>{
-              this.bills.getList().then((data)=>{
-                this.bills = data;
-                console.log('Refresh bills:');
-                console.log(this.bills);
-              })
-            });
+            this.navCtrl.popToRoot();
           }
         },
         {

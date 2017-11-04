@@ -6,6 +6,8 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { Storage } from '@ionic/storage';
+
+import { SQL_Object, SQL_Data } from '../../models/SQL_Object';
  
 @Injectable()
 export class DatabaseProvider {
@@ -72,17 +74,10 @@ export class DatabaseProvider {
   }
 
   private getNewSQLObject(){
-    return {
-      table: '',
-      stringFields: '',
-      stringValues: '',
-      query: '',
-      fields: [],
-      values: []
-    };
+    return new SQL_Object();
   }
 
-  private fillSQLObject(SQL, data){
+  private fillSQLObject(SQL: SQL_Object, data: SQL_Data){
     let t1:Boolean = true, t2:Boolean = true;
     data.fields.forEach(field => {
       if(t1){
@@ -96,10 +91,10 @@ export class DatabaseProvider {
     data.values.forEach(value => {
       if(t2){
         t2 = false;
-        SQL.stringValues += " '" + value + "'";
+        SQL.stringValues += " '" + value.replace("'", "''") + "'";
       }
       else{
-        SQL.stringValues += ", '" + value + "'";
+        SQL.stringValues += ", '" + value.replace("'", "''") + "'";
       }
     });
 
@@ -110,15 +105,8 @@ export class DatabaseProvider {
     return SQL;
   }
 
-  insert(table: String, fields: String[], values: String[]){
-    let SQL = this.fillSQLObject(
-      this.getNewSQLObject(),
-      {
-        table,
-        fields,
-        values
-      }
-    );
+  insert(table: string, fields: string[], values: string[]){
+    let SQL:SQL_Object = this.fillSQLObject( this.getNewSQLObject(), new SQL_Data(table, fields, values) );
 
     SQL.query = "INSERT INTO " + SQL.table + " (" + SQL.stringFields + ") VALUES (" + SQL.stringValues + ")";
     this.printQuery(SQL.query);
@@ -131,10 +119,14 @@ export class DatabaseProvider {
     });
   }
 
-  getAll(table) {
-    let SQL = this.getNewSQLObject();
+  select(table:string, where:string = "") {
+    let SQL:SQL_Object = this.getNewSQLObject();
     SQL.table = table;
+
     SQL.query = "SELECT * FROM " + SQL.table;
+    if(where != ""){
+      SQL.query = "WHERE " + where;
+    }
 
     this.printQuery(SQL.query);
 
@@ -147,14 +139,7 @@ export class DatabaseProvider {
   }
 
   update(table:string, ItemID_Field:string, ItemID_Value:string, Item_Fields:string[], Item_Values:string[]){
-    let SQL = this.fillSQLObject(
-      this.getNewSQLObject(),
-      {
-        table,
-        Item_Fields,
-        Item_Values
-      }
-    );
+    let SQL:SQL_Object = this.fillSQLObject( this.getNewSQLObject(), new SQL_Data(table, Item_Fields, Item_Values) );
 
     SQL.query  = "UPDATE " + SQL.table;
     SQL.query += "SET ";
@@ -177,13 +162,13 @@ export class DatabaseProvider {
     });
   }
 
-  delete(table, ItemID_Field, ItemID_Value){
-    let SQL = this.getNewSQLObject();
+  delete(table: string, ItemID_Field:string, ItemID_Value:string){
+    let SQL:SQL_Object = this.getNewSQLObject();
     SQL.table = table;
-    SQL.stringFields = ItemID_Field;
-    SQL.stringValues = ItemID_Value;
-    SQL.query = "DELETE FROM " + SQL.table + " WHERE " + SQL.stringFields + " = " + SQL.stringValues;
+    SQL.ItemID_Field = ItemID_Field;
+    SQL.ItemID_Value = ItemID_Value;
 
+    SQL.query = "DELETE FROM " + SQL.table + " WHERE " + SQL.ItemID_Field + " = " + SQL.ItemID_Value;
     this.printQuery(SQL.query);
 
     return this.database.executeSql(SQL.query, []).then(() => {
@@ -193,31 +178,4 @@ export class DatabaseProvider {
       return false;
     });
   }
-  
- 
-  // addDeveloper(name, skill, years) {
-  //   let data = [name, skill, years]
-  //   return this.database.executeSql("INSERT INTO developer (name, skill, yearsOfExperience) VALUES (?, ?, ?)", data).then(data => {
-  //     return data;
-  //   }, err => {
-  //     console.log('Error: ', err);
-  //     return err;
-  //   });
-  // }
- 
-  // getAllDevelopers() {
-  //   return this.database.executeSql("SELECT * FROM developer", []).then((data) => {
-  //     let developers = [];
-  //     if (data.rows.length > 0) {
-  //       for (var i = 0; i < data.rows.length; i++) {
-  //         developers.push({ name: data.rows.item(i).name, skill: data.rows.item(i).skill, yearsOfExperience: data.rows.item(i).yearsOfExperience });
-  //       }
-  //     }
-  //     return developers;
-  //   }, err => {
-  //     console.log('Error: ', err);
-  //     return [];
-  //   });
-  // }
- 
 }

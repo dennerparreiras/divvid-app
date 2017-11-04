@@ -23,7 +23,8 @@ export class BillCreatePage {
       title: ['', Validators.required],
       description: [''],
       todayToggle: [true],
-      billDate: [this.now.getFullYear() + '-' +this.now.getMonth() + '-' +this.now.getDay()]
+      // billDate: [this.now.getFullYear() + '-' +this.now.getMonth() + '-' +this.now.getDay()]
+      billDate: [this.now.toISOString()]
     });
 
     // Watch the form for changes, and

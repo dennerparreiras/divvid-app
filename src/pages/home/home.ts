@@ -16,7 +16,7 @@ export class HomePage {
     this.refreshBills();
   }
 
-  private refreshBills(){
+  public refreshBills(){
     this.bills.getList().then((data)=>{
       this.currentBills = data;
       console.log('Refresh bills:');
@@ -27,7 +27,8 @@ export class HomePage {
   /**
    * The view loaded, let's query our bills for the list
    */
-  ionViewDidLoad() {
+  ionViewWillEnter() {
+    this.refreshBills();
   }
 
   /**
@@ -49,7 +50,8 @@ export class HomePage {
    * Delete an bill from the list of bills.
    */
   deleteBill(bill) {
-    this.bills.delete(bill).then(()=>{
+    this.bills.delete(bill)
+    .then(()=>{
       console.log('bill deleted');
       this.refreshBills();
     })
@@ -61,6 +63,10 @@ export class HomePage {
   openBill(bill: Bill) {
     this.navCtrl.push('BillDetailPage', {
       bill: bill
-    });
+    }
+  ).then(()=>{
+      console.log('bill deleted');
+      this.refreshBills();
+    })
   }
 }

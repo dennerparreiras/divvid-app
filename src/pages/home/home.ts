@@ -13,13 +13,22 @@ export class HomePage {
   currentBills: Bill[];
 
   constructor(public navCtrl: NavController, public bills: Bills, public modalCtrl: ModalController) {
-    this.currentBills = this.bills.query();
+    this.refreshBills();
+  }
+
+  public refreshBills(){
+    this.bills.getList().then((data)=>{
+      this.currentBills = data;
+      console.log('Refresh bills:');
+      console.log(this.currentBills);
+    })
   }
 
   /**
    * The view loaded, let's query our bills for the list
    */
-  ionViewDidLoad() {
+  ionViewWillEnter() {
+    this.refreshBills();
   }
 
   /**
@@ -30,7 +39,8 @@ export class HomePage {
     let addModal = this.modalCtrl.create('BillCreatePage');
     addModal.onDidDismiss(bill => {
       if (bill) {
-        this.bills.add(bill);
+        this.bills.insert(bill);
+        this.refreshBills();
       }
     })
     addModal.present();
@@ -40,7 +50,11 @@ export class HomePage {
    * Delete an bill from the list of bills.
    */
   deleteBill(bill) {
-    this.bills.delete(bill);
+    this.bills.delete(bill)
+    .then(()=>{
+      console.log('bill deleted');
+      this.refreshBills();
+    })
   }
 
   /**
@@ -49,6 +63,10 @@ export class HomePage {
   openBill(bill: Bill) {
     this.navCtrl.push('BillDetailPage', {
       bill: bill
-    });
+    }
+  ).then(()=>{
+      console.log('bill deleted');
+      this.refreshBills();
+    })
   }
 }

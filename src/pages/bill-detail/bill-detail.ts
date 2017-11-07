@@ -34,6 +34,10 @@ export class BillDetailPage {
 
   }
 
+  findDate(date:string): Date{
+    return new Date(date);
+  }
+
   editBill() {
     let myModal = this.modalCrtl.create(BillEditPage, {bill: this.bill});
     myModal.present();
@@ -43,7 +47,9 @@ export class BillDetailPage {
    * Delete the bill.
    */
   deleteBill() {
-    this.bills.delete(this.bill);
+    this.bills.delete(this.bill).then(()=>{
+      console.log('bill deleted');
+    })
   }  
 
     /**

@@ -23,6 +23,7 @@ export class BillCreatePage {
       title: ['', Validators.required],
       description: [''],
       todayToggle: [true],
+      // billDate: [this.now.getFullYear() + '-' +this.now.getMonth() + '-' +this.now.getDay()]
       billDate: [this.now.toISOString()]
     });
 
@@ -56,6 +57,8 @@ export class BillCreatePage {
    */
   done() {
     if (!this.form.valid) { return; }
+    console.log('Date on the constructor:');
+    console.log(this.form.value.billDate);
     this.viewCtrl.dismiss(this.form.value);
   }
 }

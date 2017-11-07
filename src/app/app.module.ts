@@ -4,11 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Camera } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { IonicStorageModule, Storage } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 import { Items } from '../mocks/providers/items';
 import { Bills } from '../mocks/providers/bills';
@@ -20,6 +18,16 @@ import { Api } from '../providers/providers';
 import { Divvid } from './app.component';
 
 import { BillEditPage } from '../pages/bill-edit/bill-edit';
+
+import { IonicStorageModule, Storage } from '@ionic/storage';
+import { HttpModule } from '@angular/http';
+import { DatabaseProvider } from '../providers/database/database';
+import { SQLitePorter } from '@ionic-native/sqlite-porter';
+import { SQLite /*, SQLiteObject*/  } from '@ionic-native/sqlite';
+
+import { BillDAO } from '../DAO/DAO-bill';
+import { FriendDAO } from '../DAO/DAO-friend';
+import { ProductDAO } from '../DAO/DAO-product';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -48,6 +56,7 @@ export function provideSettings(storage: Storage) {
     BillEditPage
   ],
   imports: [
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(Divvid
       // ,{
       // monthNames: ['Janeiro', 'Fevereiro', 'Mar\u00e7o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Novembro', 'Dezembro' ],
@@ -65,7 +74,7 @@ export function provideSettings(storage: Storage) {
         deps: [HttpClient]
       }
     }),
-    IonicStorageModule.forRoot()
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -82,11 +91,13 @@ export function provideSettings(storage: Storage) {
     Places,
     Bills,
     Friends,
+    DatabaseProvider,
+    SQLitePorter,
     SQLite,
-    // SQLiteObject,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    DatabaseProvider
    
   ]
 })

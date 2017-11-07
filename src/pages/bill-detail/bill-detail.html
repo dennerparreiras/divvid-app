@@ -19,7 +19,7 @@
 
   <ion-card>
     <ion-card-header>
-      <p><b>Pedido realizado dia {{bill.billDate | date: 'dd/MM/yyyy'}}</b></p>
+      <p><b>Pedido realizado dia {{findDate(bill.dateBill) | date: 'dd/MM/yyyy'}}</b></p>
     </ion-card-header>
     <ion-card-content>
       <p>{{ bill.description }}</p>

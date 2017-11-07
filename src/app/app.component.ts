@@ -3,10 +3,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Config, Nav, Platform } from 'ionic-angular';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 import { FirstRunPage } from '../pages/pages';
 import { Settings } from '../providers/providers';
+import { DatabaseProvider } from '../providers/database/database';
 
 // <ion-menu [content]="content">
 // <ion-header>
@@ -48,41 +48,14 @@ export class Divvid {
     private config: Config, 
     private statusBar: StatusBar, 
     private splashScreen: SplashScreen,
-    private sqlite: SQLite
+    private databaseprovider: DatabaseProvider 
   ) {
     platform.ready().then(() => {
       //this.statusBar.styleDefault();
       //this.statusBar.overlaysWebView(true);
       this.statusBar.backgroundColorByHexString('#6d008a');
 
-      this.sqlite.create({
-        name: 'dp_divvid.db',
-        location: 'default'
-      })
-        .then((db: SQLiteObject) => {
-      
-          db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Bill(BillID INTEGER PRIMARY KEY AUTO INCREMENT, Title VARCHAR(100), Description VARCHAR(MAX), BillDate DATETIME, Deleted BIT)(?)', {})
-            .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Bill'))
-            .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Bill' + e));
-          
-          db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Friend(F PRIMARY KEY AUTO INCREMENT, Title VARCHAR(100), Description VARCHAR(MAX), BillDate DATETIME, Deleted BIT)(?)', {})
-            .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Friend'))
-            .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Friend' + e));
-
-          db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Product(ProductID INTEGER PRIMARY KEY AUTO INCREMENT, Description VARCHAR(MAX), Quantity INTEGER, UnityPrice DECIMAL(18,2), Deleted BIT)(?)', {})
-            .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Product'))
-            .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Product' + e));
-      
-          db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Bill_Friend(BillFriendID INTEGER PRIMARY KEY AUTO INCREMENT, FriendID INTEGER FOREIGN KEY, BillID INTEGER FOREIGN KEY, Deleted BIT)(?)', {})
-            .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Bill_Friend'))
-            .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Bill_Friend' + e));
-           
-          db.executeSql('CREATE TABLE IF NOT EXISTS DIV_Bill_Product(BillProductID INTEGER PRIMARY KEY AUTO INCREMENT, ProductID INTEGER FOREIGN KEY, BillID INTEGER FOREIGN KEY, Deleted BIT)(?)', {})
-            .then(() => console.log('>>>>>>>>>>>>>>>>>>> Criada tabela DIV_Bill_Product'))
-            .catch(e => console.log('>>>>>>>>>>>>>>>>>>> Falha ao criar a tabela DIV_Bill_Product' + e));
-      
-        })
-        .catch(e => console.log(e));
+      this.databaseprovider.fillDatabase();
 
       this.splashScreen.hide();
     });

@@ -18,20 +18,27 @@ export class BillEditPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, viewCtrl: ViewController, formBuilder: FormBuilder, bills: Bills) {
     this.bill = navParams.get('bill') || bills.defaultBill;
     this.viewCtrl = viewCtrl;
-    this.form = formBuilder.group(this.getInfoToFormGroup(this.bill));
-    console.log(this.form);
-    this.form.valueChanges.subscribe((v) => {
-      this.isReadyToSave = this.form.valid;
-    });
+    this.getInfoToFormGroup(this.bill).then((group)=>{
+      this.form = formBuilder.group(group);
+    })
+    .then(()=>{
+      this.form.valueChanges.subscribe((v) => {
+        this.isReadyToSave = this.form.valid;
+      });
+    })
   }
 
-  getInfoToFormGroup(bill){
-    return {
-      title: [bill.title, Validators.required],
-      description: [bill.description],
-      todayToggle: [false],
-      billDate: [new Date(bill.billDate).toISOString(), Validators.required]
-    }
+  private getInfoToFormGroup(bill): Promise<any>{
+    return new Promise((resolve,reject) => {
+      let aux =
+        {
+          title: [bill.title, Validators.required],
+          description: [bill.description],
+          todayToggle: [false],
+          billDate: [new Date(bill.billDate)/*.toISOString()*/, Validators.required]
+        }
+      resolve(aux);
+    })
   }
 
   cancel() {
@@ -46,7 +53,7 @@ export class BillEditPage {
       this.bill.title = this.form.value.title;
       this.bill.description = this.form.value.description;
       this.bill.todayToggle = false;
-      this.bill.billDate = Date.parse(this.form.value.billDate);
+      this.bill.billDate = /*Date.parse(*/this.form.value.billDate/*)*/;
       console.log('billDate done()');
       console.log(this.bill.billDate);
     }

@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
 import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 
 @IonicPage()
 @Component({
@@ -17,7 +18,14 @@ export class FriendCreatePage {
 
   form: FormGroup;
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera) {
+  constructor(
+    public navCtrl: NavController, 
+    public viewCtrl: ViewController, 
+    formBuilder: FormBuilder, 
+    public camera: Camera,
+    private statusBar: StatusBar 
+  ) {
+
     this.form = formBuilder.group({
       profilePic: [''],
       name: ['', Validators.required],
@@ -28,10 +36,11 @@ export class FriendCreatePage {
     this.form.valueChanges.subscribe((v) => {
       this.isReadyToSave = this.form.valid;
     });
+
   }
 
-  ionViewDidLoad() {
-
+  ionViewWillLoad() {
+    // this.statusBar.backgroundColorByHexString('#761ddb');
   }
 
   getPicture() {

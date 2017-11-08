@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController, Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Friends } from '../../providers/providers';
 
@@ -14,11 +15,21 @@ export class FriendDetailPage {
   actionsheetCtrl: any;
   platform: any;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, platform: Platform, friends: Friends, actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController) {
+  constructor(
+    public navCtrl: NavController, 
+    navParams: NavParams, 
+    platform: Platform, 
+    friends: Friends, 
+    actionSheetCtrl: ActionSheetController, 
+    public alertCtrl: AlertController,
+    private statusBar: StatusBar) {
+
+    this.statusBar.backgroundColorByHexString('#761ddb');
     this.friend = navParams.get('friend') || friends.defaultFriend;
     this.actionsheetCtrl = actionSheetCtrl;
     this.platform = platform;
     this.friends = friends;
+
   }
 
   options(){

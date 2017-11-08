@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Bills } from '../../providers/providers';
 
@@ -15,29 +16,45 @@ export class BillEditPage {
   isReadyToSave: boolean;
   form: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, viewCtrl: ViewController, formBuilder: FormBuilder, bills: Bills) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    viewCtrl: ViewController, 
+    formBuilder: FormBuilder, 
+    bills: Bills,
+    private statusBar: StatusBar 
+  ) {
+
     this.bill = navParams.get('bill') || bills.defaultBill;
     this.viewCtrl = viewCtrl;
     this.getInfoToFormGroup(this.bill).then((group)=>{
       this.form = formBuilder.group(group);
+      this.form.value.billDate = this.findDate(this.form.value.billDate);
     })
     .then(()=>{
       this.form.valueChanges.subscribe((v) => {
         this.isReadyToSave = this.form.valid;
       });
     })
+
+  }
+
+  findDate(date:string): string{
+    return new Date(date).toISOString();
+  }
+
+  ionViewWillLoad() {
+    // this.statusBar.backgroundColorByHexString('#613dff');
   }
 
   private getInfoToFormGroup(bill): Promise<any>{
     return new Promise((resolve,reject) => {
-      let aux =
-        {
-          title: [bill.title, Validators.required],
-          description: [bill.description],
-          todayToggle: [false],
-          billDate: [new Date(bill.billDate)/*.toISOString()*/, Validators.required]
-        }
-      resolve(aux);
+      resolve({
+        title: [bill.title, Validators.required],
+        description: [bill.description],
+        todayToggle: [false],
+        billDate: [bill.billDate, Validators.required]
+      });
     })
   }
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController, Platform, ModalController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Bills } from '../../providers/providers';
 import { BillEditPage } from '../bill-edit/bill-edit';
@@ -23,9 +24,11 @@ export class BillDetailPage {
     platform: Platform, 
     actionSheetCtrl: ActionSheetController, 
     modalCtrl: ModalController, 
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private statusBar: StatusBar 
   ) {
 
+    // this.statusBar.backgroundColorByHexString('#761ddb');
     this.bill = navParams.get('bill') || bills.defaultBill;
     this.bills = bills;
     this.actionsheetCtrl = actionSheetCtrl;

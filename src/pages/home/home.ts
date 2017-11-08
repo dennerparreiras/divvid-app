@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Bill } from '../../models/bill';
 import { Bills } from '../../providers/providers';
@@ -12,8 +13,14 @@ import { Bills } from '../../providers/providers';
 export class HomePage {
   currentBills: Bill[];
 
-  constructor(public navCtrl: NavController, public bills: Bills, public modalCtrl: ModalController) {
+  constructor(
+    public navCtrl: NavController, 
+    public bills: Bills, 
+    public modalCtrl: ModalController,
+    private statusBar: StatusBar ) {
+
     this.refreshBills();
+
   }
 
   public refreshBills(){
@@ -28,6 +35,7 @@ export class HomePage {
    * The view loaded, let's query our bills for the list
    */
   ionViewWillEnter() {
+    // this.statusBar.backgroundColorByHexString('#6d008a');
     this.refreshBills();
   }
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController, Platform, ModalController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Bills } from '../../providers/providers';
 import { BillEditPage } from '../bill-edit/bill-edit';
@@ -23,15 +24,21 @@ export class BillDetailPage {
     platform: Platform, 
     actionSheetCtrl: ActionSheetController, 
     modalCtrl: ModalController, 
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private statusBar: StatusBar 
   ) {
 
-    this.bill = navParams.get('bill') || bills.defaultBill;
+    // this.statusBar.backgroundColorByHexString('#761ddb');
+    this.bill = navParams.get('bill');
     this.bills = bills;
     this.actionsheetCtrl = actionSheetCtrl;
     this.platform = platform;
     this.modalCrtl = modalCtrl;
 
+  }
+
+  findDate(date:string): Date{
+    return new Date(date);
   }
 
   editBill() {
@@ -43,7 +50,9 @@ export class BillDetailPage {
    * Delete the bill.
    */
   deleteBill() {
-    this.bills.delete(this.bill);
+    this.bills.delete(this.bill).then(()=>{
+      console.log('bill deleted');
+    })
   }  
 
     /**

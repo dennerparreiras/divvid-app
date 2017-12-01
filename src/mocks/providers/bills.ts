@@ -7,28 +7,23 @@ export class Bills {
   bills: Bill[] = [];
 
   defaultBill: any = {
-    "title": "Saída de sábado (Exemplo)",
-    "description": "Barzinho com os amigos.",
-    "billDate" : new Date().toISOString()
+    "name": "Burt Bear",
+    "profilePic": "assets/img/speakers/bear.jpg",
+    "about": "Burt is a Bear.",
   };
 
 
   constructor() {
     let bills = [
       {
-        "title": "A Granel",
-        "description": "Aniversário do Rhaylander.",
-        "billDate" : new Date('2017-10-26').toISOString()
+        "name": "Burt Bear",
+        "profilePic": "assets/img/speakers/bear.jpg",
+        "about": "Burt is a Bear."
       },
       {
-        "title": "Churras do Arthur",
-        "description": "Festa com a galera da faculdade.",
-        "billDate" : new Date('2017-10-21').toISOString()
-      },
-      {
-        "title": "Pizza de Sexta",
-        "description": "Reunião de familia.",
-        "billDate" : new Date('2017-10-27').toISOString()
+        "name": "Charlie Cheetah",
+        "profilePic": "assets/img/speakers/cheetah.jpg",
+        "about": "Charlie is a Cheetah."
       }
     ];
 

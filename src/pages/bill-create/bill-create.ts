@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
 import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 
 @IonicPage()
 @Component({
@@ -17,12 +18,20 @@ export class BillCreatePage {
   form: FormGroup;
   now: Date;
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera) {
+  constructor(
+    public navCtrl: NavController, 
+    public viewCtrl: ViewController, 
+    formBuilder: FormBuilder, 
+    public camera: Camera,
+    private statusBar: StatusBar 
+  ) {
+
     this.now = new Date();
     this.form = formBuilder.group({
       title: ['', Validators.required],
       description: [''],
       todayToggle: [true],
+      // billDate: [this.now.getFullYear() + '-' +this.now.getMonth() + '-' +this.now.getDay()]
       billDate: [this.now.toISOString()]
     });
 
@@ -30,6 +39,7 @@ export class BillCreatePage {
     this.form.valueChanges.subscribe((v) => {
       this.isReadyToSave = this.form.valid;
     });
+
   }
 
   public changeValues: boolean = false;
@@ -39,8 +49,8 @@ export class BillCreatePage {
     form.billDate = this.now.toISOString();
   }
 
-  ionViewDidLoad() {
-
+  ionViewWillLoad() {
+    // this.statusBar.backgroundColorByHexString('#761ddb');
   }
 
   /**
@@ -56,6 +66,8 @@ export class BillCreatePage {
    */
   done() {
     if (!this.form.valid) { return; }
+    console.log('Date on the constructor:');
+    console.log(this.form.value.billDate);
     this.viewCtrl.dismiss(this.form.value);
   }
 }

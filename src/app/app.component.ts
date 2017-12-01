@@ -6,6 +6,7 @@ import { Config, Nav, Platform } from 'ionic-angular';
 
 import { FirstRunPage } from '../pages/pages';
 import { Settings } from '../providers/providers';
+import { DatabaseProvider } from '../providers/database/database';
 
 // <ion-menu [content]="content">
 // <ion-header>
@@ -40,18 +41,22 @@ export class Divvid {
     // { title: 'Amigos',     component: 'FriendSearchPage' }
   ]
 
-  constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+  constructor(
+    private translate: TranslateService, 
+    platform: Platform, 
+    settings: Settings, 
+    private config: Config, 
+    private statusBar: StatusBar, 
+    private splashScreen: SplashScreen,
+    private databaseprovider: DatabaseProvider 
+  ) {
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-
       //this.statusBar.styleDefault();
-
-      // let status bar overlay webview
       //this.statusBar.overlaysWebView(true);
-
-      // set status bar to white
       this.statusBar.backgroundColorByHexString('#6d008a');
+
+      this.databaseprovider.fillDatabase();
+
       this.splashScreen.hide();
     });
     this.initTranslate();

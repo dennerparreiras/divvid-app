@@ -1,6 +1,6 @@
 {
   "name": "divvid-app",
-  "app_id": "",
+  "app_id": "19b9b481",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

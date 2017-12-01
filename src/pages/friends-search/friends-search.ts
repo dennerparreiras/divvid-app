@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Friend } from '../../models/friend';
 import { Friends } from '../../providers/providers';
@@ -11,42 +12,45 @@ import { Friends } from '../../providers/providers';
 })
 export class FriendSearchPage {
 
-  searchKeys: string = '';
+  searchKeys: string = "";
   currentFriends: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public friends: Friends, public modalCtrl: ModalController) {
-    this.currentFriends = friends.query('');
-  }
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public friends: Friends, 
+    public modalCtrl: ModalController,
+    private statusBar: StatusBar 
+  ) {}
 
+  ionViewWillEnter() {
+    // this.statusBar.backgroundColorByHexString('#6d008a');
+    this.friends.getList().then((friendsList) => {
+      this.currentFriends = friendsList;
+      this.getFriends();
+      console.log('Seleção de amigos 1: ');
+      console.log(this.currentFriends);
+    });
+  }
+  
   /**
    * Perform a service for the proper friends.
    */
-  getFriends() {
-    this.currentFriends = this.friends.query({
-      name: this.searchKeys
-    });
+  public getFriends() {
+    this.currentFriends = this.friends.query( this.searchKeys );
   }
 
   /**
    * Navigate to the detail page for this friend.
    */
-  openFriend(friend: Friend) {
+  private openFriend(friend: Friend) {
     this.navCtrl.push('FriendDetailPage', {
       friend: friend
-    }).then(() => {
-      this.getFriends();
     });
   }
 
-  addFriend() {
-    let addModal = this.modalCtrl.create('FriendCreatePage');
-    addModal.onDidDismiss(friend => {
-      if (friend) {
-        this.friends.add(friend);
-        this.getFriends();
-      }
-    })
-    addModal.present();
+  private addFriend() {
+    this.navCtrl.push('FriendCreatePage', {});
   }
 
 }

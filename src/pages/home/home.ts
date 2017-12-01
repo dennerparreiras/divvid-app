@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Bill } from '../../models/bill';
 import { Bills } from '../../providers/providers';
@@ -12,14 +13,26 @@ import { Bills } from '../../providers/providers';
 export class HomePage {
   currentBills: Bill[];
 
-  constructor(public navCtrl: NavController, public bills: Bills, public modalCtrl: ModalController) {
-    this.currentBills = this.bills.query();
+  constructor(
+    public navCtrl: NavController, 
+    public bills: Bills, 
+    public modalCtrl: ModalController,
+    private statusBar: StatusBar ) {}
+
+  public refreshBills(){
+    this.bills.getList().then((data)=>{
+      this.currentBills = data;
+      console.log('Refresh bills:');
+      console.log(this.currentBills);
+    })
   }
 
   /**
    * The view loaded, let's query our bills for the list
    */
-  ionViewDidLoad() {
+  ionViewWillEnter() {
+    // this.statusBar.backgroundColorByHexString('#6d008a');
+    this.refreshBills();
   }
 
   /**
@@ -30,7 +43,8 @@ export class HomePage {
     let addModal = this.modalCtrl.create('BillCreatePage');
     addModal.onDidDismiss(bill => {
       if (bill) {
-        this.bills.add(bill);
+        this.bills.insert(bill);
+        this.refreshBills();
       }
     })
     addModal.present();
@@ -40,7 +54,11 @@ export class HomePage {
    * Delete an bill from the list of bills.
    */
   deleteBill(bill) {
-    this.bills.delete(bill);
+    this.bills.delete(bill)
+    .then(()=>{
+      console.log('bill deleted');
+      this.refreshBills();
+    })
   }
 
   /**
@@ -49,6 +67,10 @@ export class HomePage {
   openBill(bill: Bill) {
     this.navCtrl.push('BillDetailPage', {
       bill: bill
-    });
+    }
+  ).then(()=>{
+      console.log('bill deleted');
+      this.refreshBills();
+    })
   }
 }

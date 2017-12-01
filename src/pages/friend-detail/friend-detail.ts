@@ -24,8 +24,8 @@ export class FriendDetailPage {
     public alertCtrl: AlertController,
     private statusBar: StatusBar) {
 
-    this.statusBar.backgroundColorByHexString('#761ddb');
-    this.friend = navParams.get('friend') || friends.defaultFriend;
+    // this.statusBar.backgroundColorByHexString('#761ddb');
+    this.friend = navParams.get('friend');
     this.actionsheetCtrl = actionSheetCtrl;
     this.platform = platform;
     this.friends = friends;

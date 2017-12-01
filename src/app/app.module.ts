@@ -9,8 +9,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { Items } from '../mocks/providers/items';
-import { Bills } from '../mocks/providers/bills';
-import { Friends } from '../mocks/providers/friends';
+import { Bills } from '../providers/bills/bills';
+import { Friends } from '../providers/friends/friends';
 import { Places } from '../mocks/providers/places';
 import { Settings } from '../providers/providers';
 import { User } from '../providers/providers';

@@ -17,11 +17,7 @@ export class HomePage {
     public navCtrl: NavController, 
     public bills: Bills, 
     public modalCtrl: ModalController,
-    private statusBar: StatusBar ) {
-
-    this.refreshBills();
-
-  }
+    private statusBar: StatusBar ) {}
 
   public refreshBills(){
     this.bills.getList().then((data)=>{

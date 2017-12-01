@@ -17,11 +17,11 @@
   <ion-list>
     <button ion-item (click)="openFriend(friend)" *ngFor="let friend of currentFriends">
       <ion-avatar item-start>
-        <img [src]="friend.profilePic" />
+        <ion-icon name="people" color="primary" item-start></ion-icon> <!-- <img [src]="friend.PicturePath" /> -->
       </ion-avatar>
-      <h2>{{friend.name}}</h2>
-      <p>{{friend.about}}</p>
-      <ion-note item-end *ngIf="friend.note">{{friend.note}}</ion-note>
+      <h2>{{friend.Name}}</h2>
+      <p>{{friend.About}}</p>
+      <!-- <ion-note item-end *ngIf="friend.note">{{friend.note}}</ion-note> -->
     </button>
   </ion-list>
 </ion-content>

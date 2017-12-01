@@ -29,7 +29,7 @@ export class BillDetailPage {
   ) {
 
     // this.statusBar.backgroundColorByHexString('#761ddb');
-    this.bill = navParams.get('bill') || bills.defaultBill;
+    this.bill = navParams.get('bill');
     this.bills = bills;
     this.actionsheetCtrl = actionSheetCtrl;
     this.platform = platform;

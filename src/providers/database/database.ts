@@ -89,12 +89,23 @@ export class DatabaseProvider {
       }
     });
     data.values.forEach(value => {
-      if(t2){
-        t2 = false;
-        SQL.stringValues += " '" + value.replace("'", "''") + "'";
+      if(value){
+        if(t2){
+          t2 = false;
+          SQL.stringValues += " '" + value.replace("'", "''") + "'";
+        }
+        else{
+          SQL.stringValues += ", '" + value.replace("'", "''") + "'";
+        }
       }
       else{
-        SQL.stringValues += ", '" + value.replace("'", "''") + "'";
+        if(t2){
+          t2 = false;
+          SQL.stringValues += " ''";
+        }
+        else{
+          SQL.stringValues += ", ''";
+        }
       }
     });
 
@@ -119,13 +130,25 @@ export class DatabaseProvider {
     });
   }
 
-  select(table:string, where:string = "") {
+  select(table:string, fields:string[], filter:string = "") {
     let SQL:SQL_Object = this.getNewSQLObject();
+    let validator:boolean = true;
     SQL.table = table;
-
+    SQL.fields = fields;
     SQL.query = "SELECT * FROM " + SQL.table;
-    if(where != ""){
-      SQL.query = "WHERE " + where;
+
+    if(filter != ""){
+      filter.replace("'", "''");
+      SQL.query = " WHERE ";
+      SQL.fields.forEach(field => {
+        if(validator){
+          validator = !validator;
+          SQL.query += " " + field + " LIKE '%" + filter + "%' ";
+        }
+        else{
+          SQL.query += " OR " + field + " LIKE '%" + filter + "%' ";
+        }
+      });
     }
 
     this.printQuery(SQL.query);

@@ -1,15 +1,16 @@
-// import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Bill } from '../models/bill';
 import { Bills } from '../providers/providers';
 import { DatabaseProvider } from '../providers/database/database';
 
 export class BillDAO{
+    table_fields:string[] = ["BillID", "Title", "Description", "BillDate", "Deleted"] ;
+
     constructor(private databaseprovider: DatabaseProvider){}
 
     public getList(): Promise<Bills[]>{
         let bills: any[] = [];
         return new Promise((resolve,reject) => {
-            this.databaseprovider.select('DIV_Bill')
+            this.databaseprovider.select('DIV_Bill', this.table_fields)
                 .then((data) => {
                     if(data){
                         console.log(data);

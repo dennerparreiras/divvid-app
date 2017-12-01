@@ -25,7 +25,7 @@ export class BillEditPage {
     private statusBar: StatusBar 
   ) {
 
-    this.bill = navParams.get('bill') || bills.defaultBill;
+    this.bill = navParams.get('bill');
     this.viewCtrl = viewCtrl;
     this.getInfoToFormGroup(this.bill).then((group)=>{
       this.form = formBuilder.group(group);

@@ -1,41 +1,38 @@
 import { Injectable } from '@angular/core';
 
 import { Bill } from '../../models/bill';
-import { BillDAO } from '../../DAO/DAO-bill';
-import { DatabaseProvider } from '../../providers/database/database';
 
 @Injectable()
 export class Bills {
   bills: Bill[] = [];
-  dao: BillDAO;
 
   defaultBill: any = {
-    "title": "Saída de sábado (Exemplo)",
-    "description": "Barzinho com os amigos.",
-    "billDate" : new Date().toISOString()
+    "name": "Burt Bear",
+    "profilePic": "assets/img/speakers/bear.jpg",
+    "about": "Burt is a Bear.",
   };
 
 
-  constructor(private dataBaseProv: DatabaseProvider) {
-    this.dao = new BillDAO(dataBaseProv);
-  }
+  constructor() {
+    let bills = [
+      {
+        "name": "Burt Bear",
+        "profilePic": "assets/img/speakers/bear.jpg",
+        "about": "Burt is a Bear."
+      },
+      {
+        "name": "Charlie Cheetah",
+        "profilePic": "assets/img/speakers/cheetah.jpg",
+        "about": "Charlie is a Cheetah."
+      }
+    ];
 
-  public getList(): Promise<any[]>{
-    return new Promise((resolve,reject) => {
-      this.dao.getList().then((billsFound) => {
-        this.bills = [];
-        for (let bill of billsFound) {
-          this.bills.push(new Bill(bill));
-        }
-        resolve(this.bills);
-      })
-   })
+    for (let bill of bills) {
+      this.bills.push(new Bill(bill));
+    }
   }
 
   query(params?: any) {
-    console.log('bills.ts query');
-    this.getList();
-
     if (!params) {
       return this.bills;
     }
@@ -53,18 +50,11 @@ export class Bills {
     });
   }
 
-  insert(bill: Bill): any{
-    this.dao.insert(bill);
+  add(bill: Bill) {
+    this.bills.push(bill);
   }
 
   delete(bill: Bill) {
-    //this.bills.splice(this.bills.indexOf(bill), 1);
-    return new Promise((resolve,reject) => {
-      this.dao.delete(bill).then((data) => {
-        resolve(data);
-      })
-   }).catch(()=>{
-     return false;
-   })
+    this.bills.splice(this.bills.indexOf(bill), 1);
   }
 }
